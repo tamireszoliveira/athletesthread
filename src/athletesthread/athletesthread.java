@@ -38,13 +38,13 @@ public class athletesthread extends Thread {
 		semaforo.acquire();
 		System.out.println("Atleta " + id + " pegou uma arma para tiros.");
 		
-		pts = 0;
+		shotpts = 0;
 		for(int i = 1; i<=3; i++) {
 			int shotime = 500 + random.nextInt(2501);
 			Thread.sleep(shotime);
-			int shotpts = random.nextInt(11);
-			pts += shotpts;
-			System.out.println("Atleta " + id + " realizou tiro " + i + " e obteve " + shotpts + " pontos.");
+			int ptspshot = random.nextInt(11);
+			shotpts += ptspshot;
+			System.out.println("Atleta " + id + " realizou tiro " + i + " e obteve " + ptspshot + " pontos.");
 			
 		}
 		semaforo.release();
@@ -72,6 +72,11 @@ public class athletesthread extends Thread {
 			synchronized(ranking){
 				pts+=shotpts;
 				ranking[rankingIndex++] = this; 
+				
+				 if (rankingIndex == 25) {
+			            showranking();
+				 }
+
 			}
 		}catch(InterruptedException e) {
 			Thread.currentThread().interrupt();
